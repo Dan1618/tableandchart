@@ -13,26 +13,18 @@ export const useStyles = createUseStyles({
     alignItems: 'center',
     marginBottom: '32px',
     textDecoration: 'none',
-    color: '#6366f1',
     fontWeight: 600,
     fontSize: '14px',
-    transition: 'color 0.2s ease',
-    '&:hover': {
-      color: '#4f46e5',
-    },
-  },
-  header: {
-    fontSize: '32px',
-    fontWeight: 700,
-    marginBottom: '8px',
-    background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
   },
   subHeader: {
     color: '#64748b',
     marginBottom: '40px',
     fontSize: '16px',
+  },
+  topActions: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginBottom: '24px',
   },
   notesList: {
     display: 'flex',
@@ -46,16 +38,21 @@ export const useStyles = createUseStyles({
     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
     border: '1px solid #f1f5f9',
     transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-    '&:hover': {
-      transform: 'translateY(-2px)',
-      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-    },
+  },
+  noteHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '16px',
   },
   noteTitle: {
     fontSize: '18px',
     fontWeight: 600,
     color: '#1e293b',
-    marginBottom: '16px',
+  },
+  buttonGroup: {
+    display: 'flex',
+    gap: '8px',
   },
   dateGrid: {
     display: 'grid',
