@@ -1,7 +1,7 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useStyles } from './CityNotes.styles'
-import { Button } from '@mui/material';
+import { Button, LinearProgress } from '@mui/material';
 import { NoteDialog } from './NoteDialog/NoteDialog';
 import type { DialogType } from './NoteDialog/NoteDialog';
 import { formatDate } from '../../utils/utils';
@@ -16,9 +16,12 @@ export interface Note {
 
 function CityNotes() {
   const { cityId } = useParams<{ cityId: string }>()
+  const location = useLocation()
+  const cityName = location.state?.city || cityId
+
   const [notes, setNotes] = useState<Note[] | null>(null)
   const [loading, setLoading] = useState<boolean>(true)
-  const [error, setError] = useState<string | null>('')
+  const [error, setError] = useState<string | null>(null)
   const classes = useStyles()
 
   const [dialogType, setDialogType] = useState<DialogType | null>(null);
@@ -44,6 +47,21 @@ function CityNotes() {
     setSelectedNote(null);
   };
 
+  const handleSaveSuccess = (savedNote: Note) => {
+    setNotes(prevNotes => {
+      if (!prevNotes) return [savedNote];
+
+      const exists = prevNotes.some(n => n.noteId === savedNote.noteId);
+      if (exists) {
+        return prevNotes.map(n => n.noteId === savedNote.noteId ? savedNote : n);
+      }
+
+      return [...prevNotes, savedNote].sort((a, b) =>
+        new Date(a.dateCreated).getTime() - new Date(b.dateCreated).getTime()
+      );
+    });
+  };
+
   useEffect(() => {
     let active = true; // Flag to prevent state updates on unmounted components
     const fetchNotes = async () => {
@@ -51,9 +69,10 @@ function CityNotes() {
       try {
         const res = await fetch(`/api/cities/${cityId}/notes`);
         if (!res.ok) throw new Error('Failed to fetch data');
-        const data = await res.json();
+        const text = await res.text();
+        const data: Note[] = text ? JSON.parse(text) : [];
         if (active) {
-          const sortedData = data.sort((a: Note, b: Note) => 
+          const sortedData = data.sort((a: Note, b: Note) =>
             new Date(a.dateCreated).getTime() - new Date(b.dateCreated).getTime()
           );
           setNotes(sortedData);
@@ -84,13 +103,14 @@ function CityNotes() {
         onClose={handleCloseDialog}
         type={dialogType}
         note={selectedNote}
+        onSaveSuccess={handleSaveSuccess}
       />
       <Link to="/" className={classes.backLink}>
         <span>&larr; Back to Dashboard</span>
       </Link>
 
       <h1>City Notes</h1>
-      <p className={classes.subHeader}>Reviewing reports and observations for {cityId}</p>
+      <p className={classes.subHeader}>Reviewing reports and observations for {cityName}</p>
 
       <div className={classes.topActions}>
         <Button variant="outlined" onClick={handleOpenCreate}>
@@ -100,6 +120,7 @@ function CityNotes() {
 
       {loading && (
         <div className={classes.loading}>
+          <LinearProgress />
           <p>Retrieving notes...</p>
         </div>
       )}

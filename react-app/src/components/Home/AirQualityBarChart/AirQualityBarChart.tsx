@@ -31,10 +31,6 @@ const AirQualityBarChart = ({ data }: AirQualityBarChartProps) => {
     });
   }, [data]);
 
-  if (!data || data.length === 0) {
-    return <div>No air quality data available.</div>;
-  }
-
   return (
     <BarChart
       dataset={dataset}

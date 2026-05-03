@@ -1,14 +1,51 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useStyles } from './Home.styles'
-import { airQualityData } from '../../data/airQualityData'
 import DataTable from './DataTable/DataTable'
 import AirQualityBarChart from './AirQualityBarChart/AirQualityBarChart';
-import { FormControl, InputLabel, Select, MenuItem, Box } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, Box, LinearProgress } from '@mui/material';
 
 function Home() {
   const classes = useStyles()
-  const [country, setCountry] = useState('Poland')
-  const [year, setYear] = useState('2025')
+  const [country, setCountry] = useState('')
+  const [year, setYear] = useState('')
+  const [data, setData] = useState<any[]>([])
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    let active = true;
+    if (country && year) {
+      setError(null);
+      setLoading(true);
+      fetch(`/api/country/${country}/cities/stats/1Y/${year}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return res.json();
+        })
+        .then((resData) => {
+          if (active) {
+            setData(resData);
+            setLoading(false);
+          }
+        })
+        .catch((err) => {
+          if (active) {
+            console.error('Error fetching data:', err);
+            setData([]);
+            setError(err.message || 'An error occurred while fetching data');
+            setLoading(false);
+          }
+        });
+    } else {
+      setData([]);
+    }
+
+    return () => {
+      active = false;
+    };
+  }, [country, year]);
 
   return (
     <div className={classes.container}>
@@ -43,8 +80,17 @@ function Home() {
           </Select>
         </FormControl>
       </Box>
-      <AirQualityBarChart data={airQualityData} />
-      <DataTable data={airQualityData} />
+      {loading && <LinearProgress sx={{ mb: 2 }} />}
+      {error ? (
+        <div className={classes.error}>{error}</div>
+      ) : (!data || data.length === 0) ? (
+        !loading && <div className={classes.noData}>No air quality data available.</div>
+      ) : (
+        <>
+          <AirQualityBarChart data={data} />
+          <DataTable data={data} />
+        </>
+      )}
     </div>
   )
 }

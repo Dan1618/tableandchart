@@ -15,6 +15,14 @@ export const useStyles = createUseStyles({
     textDecoration: 'none',
     fontWeight: 600,
     fontSize: '14px',
+    color: '#3b82f6',
+    transition: 'color 0.2s ease',
+    '&:hover': {
+      color: '#2563eb',
+    },
+    '&:active': {
+      color: '#1d4ed8',
+    },
   },
   subHeader: {
     color: '#64748b',

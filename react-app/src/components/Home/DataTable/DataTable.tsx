@@ -89,7 +89,7 @@ const DataTable = ({ data }: DataTableProps) => {
           <tr
             key={item.id}
             className={classes.tr}
-            onClick={() => navigate(`/cities/${item.id}`)}
+            onClick={() => navigate(`/cities/${item.id}`, { state: { city: item.city } })}
           >
             <td className={classes.td}>{item.city}</td>
             <td className={classes.td}>{item.maxNO2}</td>
