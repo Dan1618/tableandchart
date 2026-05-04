@@ -1,6 +1,21 @@
 import { createUseStyles } from 'react-jss'
 
 export const useStyles = createUseStyles({
+  filterInput: {
+    width: '100%',
+    padding: '8px 12px',
+    marginBottom: '8px',
+    marginTop: '32px',
+    border: '1px solid #ddd',
+    borderRadius: '4px',
+    fontFamily: 'Arial, sans-serif',
+    fontSize: '14px',
+    boxSizing: 'border-box',
+    outline: 'none',
+    '&:focus': {
+      borderColor: '#999',
+    },
+  },
   table: {
     width: '100%',
     borderCollapse: 'collapse',
@@ -24,7 +39,7 @@ export const useStyles = createUseStyles({
     cursor: 'pointer',
     userSelect: 'none',
     '&:hover': {
-      backgroundColor: '#e9e9e9',
+      backgroundColor: '#eaf5fe',
     },
   },
   td: {
@@ -37,7 +52,15 @@ export const useStyles = createUseStyles({
       backgroundColor: '#fafafa',
     },
     '&:hover': {
-      backgroundColor: '#f1f1f1',
+      backgroundColor: '#eaf5fe'
     },
+  },
+  emptyCell: {
+    border: '1px solid #ddd',
+    padding: '24px',
+    textAlign: 'center',
+    color: '#999',
+    fontStyle: 'italic',
+    fontSize: '14px',
   },
 })
