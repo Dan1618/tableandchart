@@ -6,13 +6,13 @@ import { formatDate } from '../../../utils/utils';
 
 export type DialogType = 'details' | 'edit' | 'create';
 
-export interface NoteDialogProps {
+export type NoteDialogProps = {
   open: boolean;
   onClose: () => void;
+  onSaveSuccess: (note: Note) => void;
   type: DialogType | null;
   note: Note | null;
-  onSaveSuccess: (note: Note) => void;
-}
+};
 
 export function NoteDialog(props: NoteDialogProps) {
   const { onClose, open, type, note, onSaveSuccess } = props;
@@ -22,6 +22,7 @@ export function NoteDialog(props: NoteDialogProps) {
   const [isSaving, setIsSaving] = useState(false);
 
   const handleSave = async () => {
+    if (!cityId || type === 'details' || !type) return;
     if (type === 'create') {
       setIsSaving(true);
       try {
@@ -37,7 +38,7 @@ export function NoteDialog(props: NoteDialogProps) {
         });
 
         if (response.ok) {
-          const newNote = await response.json();
+          const newNote = await response.json() as Note;
           onSaveSuccess(newNote);
           setEditTitle('');
           setEditText('');
@@ -93,13 +94,12 @@ export function NoteDialog(props: NoteDialogProps) {
           {type === 'edit' && 'Edytuj notatkę'}
           {type === 'create' && 'Nowa notatka'}
         </DialogTitle>
-        {/* {isSaving && <LinearProgress />} */}
         <DialogContent dividers>
           {type === 'details' && note && (
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 1 }}>
               <Typography><strong>Tytuł:</strong> {note.noteTitle}</Typography>
-              <Typography><strong>Data utworzenia:</strong> {formatDate(note.dateCreated)}</Typography>
-              <Typography><strong>Data edycji:</strong> {formatDate(note.dateModified)}</Typography>
+              <Typography><strong>Data utworzenia:</strong> {formatDate(note.dateCreated || '')}</Typography>
+              <Typography><strong>Data edycji:</strong> {formatDate(note.dateModified || '')}</Typography>
               <Typography><strong>Treść:</strong></Typography>
               <Typography sx={{ whiteSpace: 'pre-wrap', color: note.noteText ? 'inherit' : 'text.secondary', fontStyle: note.noteText ? 'normal' : 'italic' }}>
                 {note.noteText || 'Brak treści'}
@@ -108,13 +108,7 @@ export function NoteDialog(props: NoteDialogProps) {
           )}
           {type === 'edit' && note && (
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 1 }}>
-              <TextField
-                label="Tytuł"
-                value={editTitle}
-                onChange={(e) => setEditTitle(e.target.value)}
-                fullWidth
-                required
-              />
+              <Typography variant="subtitle1"><strong>Tytuł:</strong> {editTitle}</Typography>
               <TextField
                 label="Treść"
                 multiline

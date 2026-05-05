@@ -12,7 +12,7 @@ router.get('/:cityId/notes', async (req, res) => {
 router.post('/:cityId/notes', async (req, res) => {
   const { cityId } = req.params;
   const { noteTitle, noteText } = req.body;
-  await delay(2000); // Wait for 2 seconds
+  // await delay(2000); // Wait for 2 seconds
 
   if (!getMockNotes[cityId]) {
     getMockNotes[cityId] = [];

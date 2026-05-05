@@ -1,19 +1,29 @@
 import { createUseStyles } from 'react-jss'
 
+const colors = {
+  border: '#ddd',
+  borderFocus: '#999',
+  text: '#333',
+  textMuted: '#999',
+  bgHeader: '#f4f4f4',
+  bgHover: '#eaf5fe',
+  bgZebra: '#fafafa',
+}
+
 export const useStyles = createUseStyles({
   filterInput: {
     width: '100%',
     padding: '8px 12px',
     marginBottom: '8px',
     marginTop: '32px',
-    border: '1px solid #ddd',
+    border: `1px solid ${colors.border}`,
     borderRadius: '4px',
     fontFamily: 'Arial, sans-serif',
     fontSize: '14px',
     boxSizing: 'border-box',
     outline: 'none',
     '&:focus': {
-      borderColor: '#999',
+      borderColor: colors.borderFocus,
     },
   },
   table: {
@@ -21,45 +31,38 @@ export const useStyles = createUseStyles({
     borderCollapse: 'collapse',
     marginTop: '20px',
     fontFamily: 'Arial, sans-serif',
-    color: '#333',
-  },
-  th: {
-    backgroundColor: '#f4f4f4',
-    border: '1px solid #ddd',
-    padding: '12px',
-    textAlign: 'left',
-    fontWeight: 'bold',
+    color: colors.text,
   },
   sortableHeader: {
-    backgroundColor: '#f4f4f4',
-    border: '1px solid #ddd',
+    backgroundColor: colors.bgHeader,
+    border: `1px solid ${colors.border}`,
     padding: '12px',
     textAlign: 'left',
     fontWeight: 'bold',
     cursor: 'pointer',
     userSelect: 'none',
     '&:hover': {
-      backgroundColor: '#eaf5fe',
+      backgroundColor: colors.bgHover,
     },
   },
   td: {
-    border: '1px solid #ddd',
+    border: `1px solid ${colors.border}`,
     padding: '10px',
   },
   tr: {
     cursor: 'pointer',
     '&:nth-child(even)': {
-      backgroundColor: '#fafafa',
+      backgroundColor: colors.bgZebra,
     },
     '&:hover': {
-      backgroundColor: '#eaf5fe'
+      backgroundColor: colors.bgHover
     },
   },
   emptyCell: {
-    border: '1px solid #ddd',
+    border: `1px solid ${colors.border}`,
     padding: '24px',
     textAlign: 'center',
-    color: '#999',
+    color: colors.textMuted,
     fontStyle: 'italic',
     fontSize: '14px',
   },

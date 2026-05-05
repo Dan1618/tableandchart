@@ -1,12 +1,28 @@
 import { createUseStyles } from 'react-jss'
 
+const colors = {
+  primary: '#3b82f6',
+  primaryHover: '#2563eb',
+  primaryActive: '#1d4ed8',
+  text: '#1e293b',
+  textSecondary: '#64748b',
+  textMuted: '#94a3b8',
+  border: '#f1f5f9',
+  bgCard: '#ffffff',
+  bgEmpty: '#f8fafc',
+  errorBg: '#fef2f2',
+  errorText: '#dc2626',
+  errorBorder: '#fee2e2',
+  borderDark: '#e2e8f0',
+}
+
 export const useStyles = createUseStyles({
   container: {
     padding: '40px',
     maxWidth: '800px',
     margin: '0 auto',
     fontFamily: '"Outfit", sans-serif',
-    color: '#1a1a1a',
+    color: colors.text,
   },
   backLink: {
     display: 'inline-flex',
@@ -15,17 +31,17 @@ export const useStyles = createUseStyles({
     textDecoration: 'none',
     fontWeight: 600,
     fontSize: '14px',
-    color: '#3781beff',
+    color: colors.primary,
     transition: 'color 0.2s ease',
     '&:hover': {
-      color: '#2563eb',
+      color: colors.primaryHover,
     },
     '&:active': {
-      color: '#1d4ed8',
+      color: colors.primaryActive,
     },
   },
   subHeader: {
-    color: '#64748b',
+    color: colors.textSecondary,
     marginBottom: '40px',
     fontSize: '16px',
   },
@@ -40,12 +56,11 @@ export const useStyles = createUseStyles({
     gap: '20px',
   },
   noteCard: {
-    background: '#ffffff',
+    background: colors.bgCard,
     borderRadius: '16px',
     padding: '24px',
     boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-    border: '1px solid #f1f5f9',
-    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+    border: `1px solid ${colors.border}`,
   },
   noteHeader: {
     display: 'flex',
@@ -56,7 +71,7 @@ export const useStyles = createUseStyles({
   noteTitle: {
     fontSize: '18px',
     fontWeight: 600,
-    color: '#1e293b',
+    color: colors.text,
   },
   buttonGroup: {
     display: 'flex',
@@ -66,7 +81,7 @@ export const useStyles = createUseStyles({
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '16px',
-    borderTop: '1px solid #f1f5f9',
+    borderTop: `1px solid ${colors.border}`,
     paddingTop: '16px',
   },
   dateItem: {
@@ -79,31 +94,31 @@ export const useStyles = createUseStyles({
     fontWeight: 700,
     textTransform: 'uppercase',
     letterSpacing: '0.05em',
-    color: '#94a3b8',
+    color: colors.textMuted,
   },
   dateValue: {
     fontSize: '14px',
-    color: '#475569',
+    color: colors.textSecondary,
   },
   loading: {
     textAlign: 'center',
     padding: '60px',
-    color: '#64748b',
+    color: colors.textSecondary,
   },
   error: {
-    background: '#fef2f2',
-    color: '#dc2626',
+    background: colors.errorBg,
+    color: colors.errorText,
     padding: '16px',
     borderRadius: '12px',
     marginBottom: '24px',
-    border: '1px solid #fee2e2',
+    border: `1px solid ${colors.errorBorder}`,
   },
   empty: {
     textAlign: 'center',
     padding: '40px',
-    background: '#f8fafc',
+    background: colors.bgEmpty,
     borderRadius: '16px',
-    color: '#64748b',
-    border: '2px dashed #e2e8f0',
+    color: colors.textSecondary,
+    border: `2px dashed ${colors.borderDark}`,
   }
 })

@@ -146,11 +146,11 @@ function CityNotes() {
                 <div className={classes.dateGrid}>
                   <div className={classes.dateItem}>
                     <span className={classes.dateLabel}>Dodano</span>
-                    <span className={classes.dateValue}>{formatDate(note.dateCreated)}</span>
+                    <span className={classes.dateValue}>{formatDate(note.dateCreated || '')}</span>
                   </div>
                   <div className={classes.dateItem}>
                     <span className={classes.dateLabel}>Edytowano</span>
-                    <span className={classes.dateValue}>{formatDate(note.dateModified)}</span>
+                    <span className={classes.dateValue}>{formatDate(note.dateModified || '')}</span>
                   </div>
                 </div>
               </div>
